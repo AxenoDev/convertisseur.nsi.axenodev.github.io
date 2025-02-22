@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"> <!-- Encodage de la page -->
+    <title>Le site de Timéo Bavart</title> <!-- Titre de la page -->
+    <link rel="stylesheet" href="./src/css/style.css"> <!-- Importation du fichier CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.13.0/brython.min.js"></script> <!-- Importation de Brython -->
+</head>
+
+<!-- balise Body, on l'on load notre script brython -->
+<body onload="brython()">
+    <div class="container">
+        <h2>Convertisseur NSI - Par Timéo Bavart</h2>
+        <div class="input-group">
+            <label for="binary">Entrée :</label>
+            <input type="text" id="inputValue" name="Entrez un nombre">
+        </div>
+        <div class="input-group">
+            <label for="convertFrom">De :</label>
+            <select id="convertFrom" onchange="changeConvertTo()"> <!-- Appel de la fonction changeConvertTo lors du changement de valeur -->
+                <option value="bin">Binaire</option>
+                <option value="dec">Décimal</option>
+                <option value="hex">Hexadécimal</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="convertTo">Vers :</label>
+            <select id="convertTo">
+                <option value="bin">Binaire</option>
+                <option value="dec">Décimal</option>
+                <option value="hex">Hexadécimal</option>
+            </select>
+        </div>
+        <button onclick="convertNumber()">Convertir</button> <!-- Appel de la fonction convertNumber lors du clic sur le bouton -->
+        <div class="input-group">
+            <label for="outputValue">Résultat :</label> <!-- Label de l'input outputValue -->
+            <input type="text" id="outputValue" value="Aucun résultat" readonly> <!-- L'input est en lecture seule -->
+        </div>
+    </div>
+
+    <!-- Importation des différents module python -->
+    <script type="text/python" src="./src/python/hex2dec.py" id="hex2dec"></script>
+    <script type="text/python" src="./src/python/hex2bin.py" id="hex2bin"></script>
+    <script type="text/python" src="./src/python/dec2bin.py" id="dec2bin"></script>
+    <script type="text/python" src="./src/python/dec2hex.py" id="dec2hex"></script>
+    <script type="text/python" src="./src/python/bin2dec.py" id="bin2dec"></script>
+    <script type="text/python" src="./src/python/bin2hex.py" id="bin2hex"></script>
+
+    <!-- Script Python -->
+    <script type="text/python">
+        from browser import document, alert, window # Importation des modules nécessaires
+        from hex2dec import hex2dec # Importation de la fonction hex2dec
+        from hex2bin import hex2bin # Importation de la fonction hex2bin
+        from dec2bin import dec2bin # Importation de la fonction dec2bin
+        from dec2hex import dec2hex # Importation de la fonction dec2hex
+        from bin2dec import bin2dec # Importation de la fonction bin2dec
+        from bin2hex import bin2hex # Importation de la fonction bin2hex
+
+        # Fonction de conversion
+        def convert_number(input_value, convert_from, convert_to): # Définition de la fonction convert_number
+            try: # Gestion des erreurs
+                if convert_from == "hex": # Si la valeur de convert_from est égale à "hex"
+                    if convert_to == "dec": # Si la valeur de convert_to est égale à "dec"
+                        result = str(hex2dec(input_value)) # On convertit la valeur en décimal
+                    elif convert_to == "bin":
+                        result = hex2bin(input_value)
+                elif convert_from == "dec":
+                    if convert_to == "bin":
+                        result = dec2bin(int(input_value))
+                    elif convert_to == "hex":
+                        result = dec2hex(int(input_value))
+                elif convert_from == "bin":
+                    if convert_to == "dec":
+                        result = str(bin2dec(input_value))
+                    elif convert_to == "hex":
+                        result = bin2hex(input_value)
+
+                return result # On retourne le résultat
+
+            except ValueError: # Si une erreur survient
+                alert("Veuillez entrer une valeur valide.") # On affiche une alerte (message d'erreur)
+                return None # On retourne None
+
+        window.convert_number = convert_number
+    </script>
+
+    <!-- Script JavaScript -->
+    <script type="text/javascript">
+        const convertFromInput = document.getElementById("convertFrom"); // Récupération de l'élément select convertFrom
+        const convertToInput = document.getElementById("convertTo"); // Récupération de l'élément select convertTo
+
+        // Fonction Esthétique pour désactiver les options qui peuvent poser problème lors de la conversion (Bug)
+        function changeConvertTo() {
+            // Réinitialisation des options du select utilisant une boucle for
+            for (let option of convertToInput.options) { // Pour chaque option du select
+                option.disabled = false; // On réactive l'options en mettant le disabled à false
+            }
+            if (convertFromInput.value === "bin") { // Si la valeur du select convertFrom est égale à "bin"
+                convertToInput.options[0].disabled = true; // On désactive l'option 0 du select convertTo
+            } else if (convertFromInput.value === "dec") { // Sinon si la valeur du select convertFrom est égale à "dec"
+                convertToInput.options[1].disabled = true; // On désactive l'option 1 du select convertTo
+            } else if (convertFromInput.value === "hex") { // Sinon si la valeur du select convertFrom est égale à "hex"
+                convertToInput.options[2].disabled = true; // On désactive l'option 2 du select convertTo
+            }
+        }
+        
+        // Fonction de conversion
+        function convertNumber() {
+            const inputValue = document.getElementById("inputValue").value; // Récupération de la valeur de l'input
+            const convertFrom = convertFromInput.value; // Récupération de la valeur du select convertFrom
+            const convertTo = convertToInput.value; // Récupération de la valeur du select convertTo
+
+            if (convertFrom === convertTo) { // Si la valeur de convertFrom est égale à la valeur de convertTo
+                alert("Veuillez choisir des unités différentes."); // On affiche un message d'erreur
+                return; // On arrête la fonction
+            }
+
+            const result = window.convert_number(inputValue, convertFrom, convertTo); // Appel de la fonction convert_number
+            if (result !== null) { // Si le résultat n'est pas null
+                document.getElementById("outputValue").value = result; // On affiche le résultat dans l'input outputValue
+            }
+        }
+    </script>
+</body>
+</html>

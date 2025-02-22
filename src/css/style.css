@@ -1,0 +1,60 @@
+/* *: correspond à la globalité des éléments de la page */
+* {
+    margin: 0; /* On supprime les marges de la page */
+    padding: 0; /* On supprime les paddings de la page */
+    box-sizing: border-box; /* On inclut les bordures et les paddings dans la taille des éléments */
+    font-family: Poppins, sans-serif; /* On définit une police par défaut */
+}
+
+/* On définit le style du body (Donc de la page) */
+body {
+    background-color: #0d1117; /* On définit une couleur de fond */
+    color: white; /* On définit une couleur de texte */
+    display: flex; /* On affiche les éléments en mode flexible */
+    justify-content: center; /* On centre les éléments horizontalement */
+    align-items: center; /* On centre les éléments verticalement */
+    height: 100vh; /* On définit une hauteur de 100% de la hauteur de l'écran */
+    overflow: hidden; /* On cache les éléments qui dépassent de la page */
+}
+
+/* On définit le style du container */
+.container {
+    background: rgba(13, 17, 23, 0.8); /* On définit une couleur de fond avec de la transparence */
+    padding: 20px; /* On ajoute un peu de marge intérieure */
+    border-radius: 12px; /* On arrondit les coins */
+    backdrop-filter: blur(10px); /* On ajoute un flou à l'arrière-plan */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* On ajoute une ombre portée */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* On ajoute une bordure */
+}
+
+/* On définit le style de l'input de base */
+.input-group {
+    margin: 15px 0 15px 0; /* On ajoute de la marge en haut et en bas */
+}
+
+/* On définit le style des input, des select, et des boutons */
+input,
+select,
+button {
+    width: 100%; /* On définit une largeur de 100% */
+    padding: 10px; /* On ajoute un peu de marge intérieure */
+    margin-top: 5px; /* On ajoute un peu de marge en haut */
+    border-radius: 6px; /* On arrondit les coins */
+    background: #161b22; /* On définit une couleur de fond */
+    color: white; /* On définit une couleur de texte */
+    outline: none; /* On supprime le contour */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* On ajoute une bordure */
+}
+
+/* On définit le style des boutons */
+button {
+    background: #0b0d11; /* On définit une couleur de fond */
+    cursor: pointer; /* On change le curseur au survol */
+    transition: 0.3s; /* On ajoute une transition */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* On ajoute une bordure */
+}
+
+/* On définit le style des boutons au survol de la souris */
+button:hover {
+    background: #06080a; /* On change la couleur de fond au survol */
+}
