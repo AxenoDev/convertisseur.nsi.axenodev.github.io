@@ -1,6 +1,7 @@
 # Convertisseur de Bases Numériques
 
-Lien: [Cliquez ici](https://axenodev.github.io/nsi-convertisseur/)
+Lien: [Cliquer ici](https://axenodev.github.io/nsi-convertisseur/)
+Version avancé: [Cliquer ici](https://github.com/AxenoDev/nsi-convertisseur/tree/advanced)
 
 ## Description
 Ce projet est un convertisseur de bases numériques permettant de convertir des nombres entre les formats binaire, décimal et hexadécimal. Il utilise une interface web moderne avec un design épuré et sombre.
